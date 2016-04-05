@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view
+	xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xp:this.data>
+		<xe:objectData
+			var="mainCtrl"
+			createObject="#{javascript:return new eu.MainController()}">
+		</xe:objectData>
+	</xp:this.data>
+
+	<xp:button
+		value="Remove entry at index 1"
+		id="button1">
+		<xp:eventHandler
+			event="onclick"
+			submit="true"
+			refreshMode="partial"
+			refreshId="repeatMain">
+			<xp:this.action><![CDATA[#{javascript:mainCtrl.remove(1)}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+
+	<!--main-->
+	<xp:repeat
+		value="#{mainCtrl.entries}"
+		id="repeatMain"
+		var="main"
+		rows="30">
+
+		<xp:text
+			tagName="h1"
+			escape="true"
+			id="computedField2"
+			value="#{main.name}">
+		</xp:text>
+
+		<!-- sub -->
+
+		<xp:panel>
+			<xp:this.data>
+				<xe:objectData
+					var="subCtrl">
+					<xe:this.createObject><![CDATA[#{javascript:return new eu.SubController(main)}]]></xe:this.createObject>
+				</xe:objectData>
+			</xp:this.data>
+
+			<xp:repeat
+				id="repeat2"
+				value="#{subCtrl.entries}"
+				var="sub"
+				rows="30">
+
+				<xp:text
+					tagName="h2"
+					escape="true"
+					id="computedField1"
+					value="#{sub.name}">
+				</xp:text>
+			</xp:repeat>
+
+		</xp:panel>
+
+		<hr />
+
+	</xp:repeat>
+
+</xp:view>
+
